@@ -10,6 +10,8 @@ class TaskList:
         """Expects 1 or more Task class object"""
         if isinstance(task, Task):
             self.tasks.append(task)
+        elif isinstance(task, str):
+            self.tasks.append(Task(task))
         else:
             for t in task:
                 self.tasks.append(t)
@@ -32,19 +34,3 @@ class WorkTask(Task):
         super().__init__(task)
         self.client = client
 
-mytasks = TaskList()
-# Add tasks individually
-mytasks.add(Task('get eggs'))
-mytasks.add(Task('call mom back'))
-mytasks.add(WorkTask('send that email to tim','Celestial Wealth Coffee'))
-
-# Add a batch of tasks
-t1 = Task('watch that movie')
-t2 = Task('buy oil for car')
-t3 = Task('pick up library book')
-
-tasks_to_add = [t1,t2,t3]
-
-mytasks.add(tasks_to_add)
-
-mytasks.show_tasks()
