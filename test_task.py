@@ -19,7 +19,7 @@ class TestTask(unittest.TestCase):
         self.t1 = task.Task('go to the store for eggs', self.tf1)
 
         self.tf2 = task.Client('Work', 'Celestial Wealth Coffee')
-        self.t2 = task.Task('Email that person',self.tf2)
+        self.t2 = task.Task('Email that person',self.tf2)  
 
     def tearDown(self):
         pass
@@ -35,36 +35,24 @@ class TestTask(unittest.TestCase):
         self.assertGreaterEqual(self.t2.createdon, datetime.datetime.now())
         self.assertTrue(self.t2.is_active)
 
+class TestTaskFamily(unittest.TestCase):
 
-# class TestTaskList(unittest.TestCase):
+    def setUp(self):
+        self.tf1 = task.TaskFamily('Personal')
+        self.t1 = task.Task('go to the store for eggs', self.tf1)
 
-#     def setUp(self):
-#         self.task1 = task.Task('Watch that movie')
-        
-#     def test_create_tasklist(self):
-#         mytasks = task.TaskList()
-#         self.assertGreaterEqual(mytasks.createdon, datetime.datetime.now())
-#         self.assertEqual(mytasks.tasks, [])
+        self.tf2 = task.Client('Work', 'Celestial Wealth Coffee')
+        self.t2 = task.Task('Email that person',self.tf2) 
 
-#     def test_add_one_task(self):
-#         short_task_list = task.TaskList()
-#         short_task_list.add(self.task1)
-#         self.assertEqual(len(short_task_list.tasks), 1)
+    def test_last_added(self):
+        time.sleep(1/10000000)
+        self.t1 = task.Task('should be last task', self.tf1)
+        last_task = self.tf1.last_task()
+        self.assertEqual(last_task.text, 'should be last task')
     
-#     def test_last_added_and_multiple_added(self):
-#         self.task2 = task.Task('Watch that tv show')
-#         self.task3 = task.Task('Listen to that song')
-#         self.worktask1 = task.WorkTask('Email that person', 'Celestial Wealth Coffee')
-#         time.sleep(1/10000000)       
-#         worktask2 = task.WorkTask('Call Taylor', 'Dark as Bark Coffee')
-        
-#         self.task_list_for_checking_methods = task.TaskList()
-#         self.task_list_for_checking_methods.add([self.task1, self.task2, self.task3, self.worktask1, worktask2])
-
-#         last_task = self.task_list_for_checking_methods.last_task()
-
-#         self.assertEqual(last_task.text, 'Call Taylor')
-#         self.assertEqual(len(self.task_list_for_checking_methods.tasks),5)
+    def test_client(self):
+        client = self.t2.task_family.client
+        self.assertEqual(client, 'Celestial Wealth Coffee')
 
 
 
